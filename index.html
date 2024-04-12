@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link rel="stylesheet" href="styles.css" />
+    <link
+      href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css"
+      rel="stylesheet"
+    />
+  </head>
+  <body>
+    <div class="container">
+      <div id="score"></div>
+      <canvas id="game" width="375" height="375"></canvas>
+      <div id="introduction">Тебе направо! Кликни и держи</div>
+      <div id="perfect"></div>
+      <button id="restart">ЛОЛ <br/>Вы провалили задание "Писечных столбов"</button>
+      <button id="drawBtn" class="drawWay">ЖМИ и держи</button>
+    </div>
+
+    <div
+      class="modal fade show"
+      id="exampleModal"
+      tabindex="-1"
+      role="dialog"
+      aria-labelledby="exampleModalLabel"
+      aria-hidden="true"
+    >
+      <div class="modal-dialog" role="document">
+        <div class="modal-content">
+          <div class="modal-header">
+            <h5 class="modal-title" id="exampleModalLabel">Наставления</h5>
+            <button
+              type="button"
+              class="close"
+              data-dismiss="modal"
+              aria-label="Close"
+            >
+              <span aria-hidden="true">&times;</span>
+            </button>
+          </div>
+          <div class="modal-body">
+              <link rel="stylesheet" type="text/css" href="//fonts.googleapis.com/css?family=Play" />
+              <h1>Что попасть к нам ты должен пройти:<br><div class="c1"><div class="type">Писечные столбы</div></div>
+              </br>
+              <div class="c2"><div class="type2">Писечный коридор</div></div>
+              </br>
+              <div class="c3"><div class="type3">Одобрение Вадима!</div></div>
+              <br></br></h1>
+            </div>
+          <div class="modal-footer">
+            <button
+              type="button"
+              class="btn btn-secondary"
+              data-dismiss="modal"
+            >
+              Я готов!
+            </button>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <script src="app.js"></script>
+    <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.9.3/dist/umd/popper.min.js"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+
+    <script>      
+      $(document).ready(function () {
+        $("#exampleModal").modal("show");
+      });
+    </script>
+  </body>
+</html>
