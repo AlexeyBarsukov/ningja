@@ -12,11 +12,14 @@
   <body>
     <div class="container">
       <div id="score"></div>
+      <div id="combo">+2</div>
+      <button id="openModalBtn">Изменить язык</button>
       <canvas id="game" width="375" height="375"></canvas>
       <div id="introduction">Тебе направо! Кликни и держи</div>
       <div id="perfect"></div>
-      <button id="restart">ЛОЛ <br/>Вы провалили задание "Писечных столбов"</button>
-      <button id="drawBtn" class="drawWay">ЖМИ и держи</button>
+      <button id="restart"><b>Все еще впереди! <br/>Количество пройденных столбов: <div id="scoreProgress"></div> </b><br/>
+        <i>Нажмите на квадрат, чтобы продолжить!</i>
+      </button>
     </div>
 
     <div
@@ -30,7 +33,12 @@
       <div class="modal-dialog" role="document">
         <div class="modal-content">
           <div class="modal-header">
-            <h5 class="modal-title" id="exampleModalLabel">Наставления</h5>
+            <h5 class="modal-title" id="exampleModalLabel">
+              Наставления <br/>
+              <button class="btn-flags" id="russian-flag">🇷🇺</button>
+              <button class="btn-flags" id="american-flag">🇺🇸</button>
+              <button class="btn-flags" id="turkish-flag">🇹🇷</button>
+            </h5>
             <button
               type="button"
               class="close"
@@ -42,20 +50,21 @@
           </div>
           <div class="modal-body">
               <link rel="stylesheet" type="text/css" href="//fonts.googleapis.com/css?family=Play" />
-              <h1>Что попасть к нам ты должен пройти:<br><div class="c1"><div class="type">Писечные столбы</div></div>
-              </br>
-              <div class="c2"><div class="type2">Писечный коридор</div></div>
-              </br>
-              <div class="c3"><div class="type3">Одобрение Вадима!</div></div>
-              <br></br></h1>
+              <h1 id="title-task">Твоя задача преодолеть как можно больше столбов!<br>
+                <div class="c2"><div class="type2" id="typeText2">Никогда не сдавайся!</div></div>
+                </br>
+                <div class="c3"><div class="type3" id="typeText3">Преодолей все трудности!</div></div>
+            </h1>
             </div>
           <div class="modal-footer">
+            <span id="afterClickDescription">После клика на кнопку "Вперед" твой ниндзя отправится в путь!</span>
             <button
               type="button"
               class="btn btn-secondary"
               data-dismiss="modal"
+              id="forwardBtn"
             >
-              Я готов!
+              Вперед
             </button>
           </div>
         </div>
