@@ -24,6 +24,8 @@ let trees = [];
 
 let score = 0;
 
+
+
 // Configuration
 const canvasWidth = 375;
 const canvasHeight = 375;
@@ -61,7 +63,188 @@ const introductionElement = document.getElementById("introduction");
 const perfectElement = document.getElementById("perfect");
 const restartButton = document.getElementById("restart");
 const scoreElement = document.getElementById("score");
+const openModalButton = document.getElementById("openModalBtn");
+const scoreWhenFinish = document.getElementById("scoreProgress");
 const drawWayButton = document.getElementById("drawBtn");
+const typingElement2 = document.querySelector('h1 .type2');
+const titleElement = document.getElementById('exampleModalLabel');
+const titleTask = document.getElementById('title-task');
+const type2Description = document.getElementById('typeText2');
+const type3Description = document.getElementById('typeText3');
+const afterClickDescription = document.getElementById('afterClickDescription');
+const forwardButton = document.getElementById('forwardBtn');
+const changeLanguage = document.getElementById('openModalBtn');
+const mainSound = new Audio('assets/main.mp3');
+const comboElement = document.getElementById('combo')
+
+// Функция для воспроизведения музыки
+function playMusic() {
+  mainSound.play();
+}
+
+// Функция для паузы музыки
+function pauseMusic() {
+  mainSound.pause();
+}
+
+
+  changeLanguage.addEventListener('click', () => {
+    pauseMusic();
+    $(document).ready(function () {
+        $("#exampleModal").modal("show");
+      });
+  });
+
+
+
+let selectedLanguage = 'ru'; // По умолчанию русский
+
+
+// Функция для обновления фраз
+function updatePhrases() {
+  const phrases = phrasesByLanguage[selectedLanguage];
+  if (currentPhraseIndex < phrases.length) {
+    perfectElement.innerText = phrases[currentPhraseIndex];
+    currentPhraseIndex++;
+  } else {
+    currentPhraseIndex = 0;
+    perfectElement.innerText = phrases[currentPhraseIndex];
+  }
+}
+
+// Получаем кнопки с флагами
+const russianFlagButton = document.getElementById('russian-flag');
+const americanFlagButton = document.getElementById('american-flag');
+const turkishFlagButton = document.getElementById('turkish-flag');
+
+function updateRestartButtonText() {
+  const score = localStorage.getItem('score'); // Получаем счет из localStorage
+  
+  if (selectedLanguage === 'ru') {
+    restartButton.querySelector('b').innerHTML = `Все еще впереди! <br/>Количество пройденных столбов: ${score}`;
+    restartButton.querySelector('i').innerText = 'Нажмите на квадрат, чтобы продолжить!';
+  } else if (selectedLanguage === 'en') {
+    restartButton.querySelector('b').innerHTML = `Still Ahead! <br/>Pillars Passed: ${score}`;
+    restartButton.querySelector('i').innerText = 'Click the square to continue!';
+  } else if (selectedLanguage === 'tr') {
+    restartButton.querySelector('b').innerHTML = `Hala Önümüzde! <br/>Sütunlar Geçildi: ${score}`;
+    restartButton.querySelector('i').innerText = 'Devam etmek için kareye tıklayın!';
+  }
+}
+
+russianFlagButton.addEventListener('click', () => {
+  titleElement.firstChild.nodeValue = 'Наставления';
+  titleTask.firstChild.nodeValue = 'Твоя задача преодолеть как можно больше столбов!';
+  type2Description.firstChild.nodeValue = 'Никогда не сдавайся!';
+  type3Description.firstChild.nodeValue = 'Преодолей все трудности!';
+  afterClickDescription.firstChild.nodeValue = 'После клика на кнопку "Вперед" твой ниндзя отправится в путь!';
+  forwardButton.firstChild.nodeValue = 'Вперед';
+//После старта игры
+  introductionElement.firstChild.nodeValue = 'Тебе направо! Кликни и держи';
+  changeLanguage.firstChild.nodeValue = 'Изменить язык';
+
+  // restartButton.querySelector('b').innerHTML = `Все еще впереди! <br/>Количество пройденных столбов: ${score}`;
+  // restartButton.querySelector('i').innerText = 'Нажмите на квадрат, чтобы продолжить!';
+
+  selectedLanguage = 'ru';
+  updatePhrases();
+  updateRestartButtonText();
+});
+
+americanFlagButton.addEventListener('click', () => {
+  titleElement.firstChild.nodeValue = 'Instructions';
+  titleTask.firstChild.nodeValue = 'Your task is to overcome as many pillars as possible!';
+  type2Description.firstChild.nodeValue = 'Never give up!';
+  type3Description.firstChild.nodeValue = 'Overcome all difficulties!';
+  afterClickDescription.firstChild.nodeValue = 'After clicking the "Forward" button, your ninja will set off on his journey!';
+  forwardButton.firstChild.nodeValue = 'Forward';
+//after start
+  introductionElement.firstChild.nodeValue = 'You go right! Click and hold';
+  changeLanguage.firstChild.nodeValue = 'Change the language';
+
+  // restartButton.querySelector('b').innerHTML = `Still Ahead! <br/>Pillars Passed: ${score}`;
+  // restartButton.querySelector('i').innerText = 'Click the square to continue!';
+
+  selectedLanguage = 'en';
+  updatePhrases();
+  updateRestartButtonText();
+});
+
+turkishFlagButton.addEventListener('click', () => {
+  titleElement.firstChild.nodeValue = 'Talimatlar';
+  titleTask.firstChild.nodeValue = 'Göreviniz mümkün olduğunca çok sayıda engeli aşmak!';
+  type2Description.firstChild.nodeValue = 'Asla pes etme!';
+  type3Description.firstChild.nodeValue = 'Her zorluğun üstesinden gel!';
+  afterClickDescription.firstChild.nodeValue = '"İleri" butonuna tıkladıktan sonra ninjanız yolculuğuna başlayacak!';
+  forwardButton.firstChild.nodeValue = 'İleri';
+
+  introductionElement.firstChild.nodeValue = 'Sen sağa git! Tıkla ve tut';
+  changeLanguage.firstChild.nodeValue = 'Dili değiştir'; 
+
+  // restartButton.querySelector('b').innerHTML = `Hala Önümüzde! <br/>Sütunlar Geçildi: ${score}`;
+  // restartButton.querySelector('i').innerText = 'Devam etmek için kareye tıklayın!';
+
+  selectedLanguage = 'tr';
+  updatePhrases();
+  updateRestartButtonText();
+});
+
+const sounds = [
+    new Audio('assets/wow.mp3'),
+    new Audio('assets/wow2.mp3'),
+    new Audio('assets/wow3.mp3'),
+    new Audio('assets/wow4.mp3'),
+];
+
+const failedSounds = [
+    new Audio('assets/fail.mp3'),
+    new Audio('assets/fail2.mp3'),
+    new Audio('assets/fail3.mp3'),
+    new Audio('assets/fail4.mp3')
+];
+
+function playRandomSound() {
+    const randomIndex = Math.floor(Math.random() * sounds.length);
+    sounds[randomIndex].play();
+}
+
+function playRandomFailsSounds(){
+  const randomIndex = Math.floor(Math.random() * failedSounds.length);
+    failedSounds[randomIndex].play();
+}
+
+const pausedSounds = new Set();
+
+document.addEventListener('visibilitychange', () => {
+  if (document.hidden) {
+    // Вкладка неактивна, приостанавливаем все звуки и запоминаем их
+    failedSounds.forEach(sound => {
+      if (!sound.paused) {
+        sound.pause();
+        pausedSounds.add(sound);
+      }
+    });
+
+    sounds.forEach(sound => {
+      if (!sound.paused) {
+        sound.pause();
+        pausedSounds.add(sound);
+      }
+    });
+
+    if(!mainSound.paused){
+      mainSound.pause();
+      pausedSounds.add(mainSound);
+    }
+
+  } else {
+    // Вкладка активна, возобновляем воспроизведение ранее запомненных звуков
+    pausedSounds.forEach(sound => {
+      sound.play();
+      pausedSounds.delete(sound);
+    });
+  }
+});
 
 // Initialize layout
 resetGame();
@@ -78,6 +261,9 @@ function resetGame() {
   perfectElement.style.opacity = 0;
   restartButton.style.display = "none";
   scoreElement.innerText = score;
+  scoreWhenFinish.innerText = score;
+
+localStorage.setItem('score', 0)
 
   // The first platform is always the same
   // x + w has to match paddingX
@@ -158,21 +344,26 @@ window.addEventListener("keydown", function (event) {
 });
 
 window.addEventListener("mousedown", function (event) {
-  if (phase == "waiting") {
+  if (event.target === canvas) {
+    if (phase == "waiting") {
     lastTimestamp = undefined;
     introductionElement.style.opacity = 0;
     phase = "stretching";
     window.requestAnimationFrame(animate);
   }
+}
+  
 });
 
 
 window.addEventListener("touchstart", function (event) {
-  if (phase == "waiting") {
+  if (event.target === canvas) {
+    if (phase == "waiting") {
     lastTimestamp = undefined;
     introductionElement.style.opacity = 0;
     phase = "stretching";
     window.requestAnimationFrame(animate);
+  }
   }
 });
 
@@ -193,13 +384,35 @@ window.addEventListener("resize", function (event) {
 window.requestAnimationFrame(animate);
 
 
-const phrases = [
-    "Иди до конца! ЯХАБАЛЯ ", 
-    "Ох уж этот писечный коридор", 
+const phrasesByLanguage = {
+  ru: [
+    "Иди до конца!",
+    "Ох уж эти столбики!",
     "Что ж ты, фраер! Газуй давай!",
     "Ты уже слишком далеко зашел",
-    "Солнышко, ДАВАЙ, Я ТЯ ЛЮБЛЮ, ДАВАЙ МОЙ СЫНОЧЕК! ЧУЧУТЬ ОСТАЛОСЬ ",
-];
+    "Бодро вперёд! Ты это можешь!",
+    "Брось вызов гравитации! Не вздумай падать!",
+    "Не сдавайся! Твой путь только начался!",
+  ],
+  en: [
+    "Go all the way!",
+    "Oh, these pillars!",
+    "Come on, buddy! Step on it!",
+    "You have come too far already",
+    "Keep going strong! You can do it!",
+    "Defy gravity! Don't you dare fall!",
+    "Don't give up! Your journey has just begun!",
+  ],
+  tr: [
+    "Sona kadar git!",
+    "Oh, bu direkler!",
+    "Hadi bakalım! Bas gaza!",
+    "Çok uzaklaştın",
+    "Devam et! Yapabilirsin!",
+    "Yerçekimine meydan oku! Düşme!",
+    "Pes etme! Yolun daha başındasın!",
+  ]
+};
 let currentPhraseIndex = 0;
 
 // The main game loop
@@ -212,6 +425,7 @@ function animate(timestamp) {
 
   switch (phase) {
     case "waiting":
+      playMusic();
       return; // Stop the loop
     case "stretching": {
       sticks.last().length += (timestamp - lastTimestamp) / stretchingSpeed;
@@ -224,21 +438,18 @@ function animate(timestamp) {
         sticks.last().rotation = 90;
 
         if (phase === "turning") {
-    // Условие для смены фразы
-    if (currentPhraseIndex < phrases.length) {
-      perfectElement.innerText = phrases[currentPhraseIndex];
-      currentPhraseIndex++;
-    } else {
-      currentPhraseIndex = 0;
-      perfectElement.innerText = phrases[currentPhraseIndex];
-    }
+          updatePhrases();
   }
 
         const [nextPlatform, perfectHit] = thePlatformTheStickHits();
         if (nextPlatform) {
           // Increase score
           score += perfectHit ? 2 : 1;
+          perfectHit ? comboElement.style.display = "block" : comboElement.style.display = "block"
           scoreElement.innerText = score;
+          scoreWhenFinish.innerText = score;
+
+          localStorage.setItem('score', score)
             perfectElement.style.opacity = 1;
             setTimeout(() => (perfectElement.style.opacity = 0), 1000);
           if (perfectHit) {
@@ -265,6 +476,7 @@ function animate(timestamp) {
         if (heroX > maxHeroX) {
           heroX = maxHeroX;
           phase = "transitioning";
+          playRandomSound();
         }
       } else {
         // If hero won't reach another platform then limit it's position at the end of the pole
@@ -292,14 +504,16 @@ function animate(timestamp) {
       break;
     }
     case "falling": {
-      if (sticks.last().rotation < 180)
+      if (sticks.last().rotation < 180) 
         sticks.last().rotation += (timestamp - lastTimestamp) / turningSpeed;
 
       heroY += (timestamp - lastTimestamp) / fallingSpeed;
       const maxHeroY =
         platformHeight + 100 + (window.innerHeight - canvasHeight) / 2;
       if (heroY > maxHeroY) {
+        playRandomFailsSounds();
         restartButton.style.display = "block";
+        updateRestartButtonText(); 
         return;
       }
       break;
