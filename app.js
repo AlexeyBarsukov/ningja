@@ -20,7 +20,6 @@ let platforms = [];
 let sticks = [];
 let trees = [];
 
-// Todo: Save high score to localStorage (?)
 
 let score = 0;
 
@@ -63,10 +62,7 @@ const introductionElement = document.getElementById("introduction");
 const perfectElement = document.getElementById("perfect");
 const restartButton = document.getElementById("restart");
 const scoreElement = document.getElementById("score");
-const openModalButton = document.getElementById("openModalBtn");
 const scoreWhenFinish = document.getElementById("scoreProgress");
-const drawWayButton = document.getElementById("drawBtn");
-const typingElement2 = document.querySelector('h1 .type2');
 const titleElement = document.getElementById('exampleModalLabel');
 const titleTask = document.getElementById('title-task');
 const type2Description = document.getElementById('typeText2');
@@ -75,7 +71,7 @@ const afterClickDescription = document.getElementById('afterClickDescription');
 const forwardButton = document.getElementById('forwardBtn');
 const changeLanguage = document.getElementById('openModalBtn');
 const mainSound = new Audio('assets/main.mp3');
-const comboElement = document.getElementById('combo')
+const comboElement = document.getElementById('combo');
 
 // Функция для воспроизведения музыки
 function playMusic() {
@@ -343,37 +339,53 @@ window.addEventListener("keydown", function (event) {
   }
 });
 
-window.addEventListener("mousedown", function (event) {
-  if (event.target === canvas) {
-    if (phase == "waiting") {
-    lastTimestamp = undefined;
-    introductionElement.style.opacity = 0;
-    phase = "stretching";
-    window.requestAnimationFrame(animate);
-  }
+const isTouchDevice = 'ontouchstart' in window || navigator.maxTouchPoints > 0;
+
+document.addEventListener("contextmenu", function (e) {
+  e.preventDefault();
+});
+
+
+// Обработчик для десктопных устройств
+if (!isTouchDevice) {
+  window.addEventListener("mousedown", function (event) {
+    if (event.target === canvas) {
+      if (phase === "waiting") {
+        lastTimestamp = undefined;
+        introductionElement.style.opacity = 0;
+        phase = "stretching";
+        window.requestAnimationFrame(animate);
+      }
+    }
+  });
+  window.addEventListener("mouseup", function (event) {
+    if (phase === "stretching") {
+      phase = "turning";
+    }
+  });
 }
-  
-});
 
+if (isTouchDevice) {
+  window.addEventListener("touchstart", function (event) {
+    if (event.target === canvas) {
+      if (phase === "waiting") {
+        lastTimestamp = undefined;
+        introductionElement.style.opacity = 0;
+        phase = "stretching";
+        window.requestAnimationFrame(animate);
+      }
+    }
+  });
 
-window.addEventListener("touchstart", function (event) {
-  if (event.target === canvas) {
-    if (phase == "waiting") {
-    lastTimestamp = undefined;
-    introductionElement.style.opacity = 0;
-    phase = "stretching";
-    window.requestAnimationFrame(animate);
-  }
-  }
-});
+  window.addEventListener("touchend", function (event) {
+    if (phase === "stretching") {
+      phase = "turning";
+    }
+  });
+}
 
-
-
-window.addEventListener("mouseup", function (event) {
-  if (phase == "stretching") {
-    phase = "turning";
-  }
-});
+document.body.style.userSelect = 'none';
+document.body.style.webkitTouchCallout = 'none';
 
 window.addEventListener("resize", function (event) {
   canvas.width = window.innerWidth;
@@ -445,7 +457,6 @@ function animate(timestamp) {
         if (nextPlatform) {
           // Increase score
           score += perfectHit ? 2 : 1;
-          perfectHit ? comboElement.style.display = "block" : comboElement.style.display = "block"
           scoreElement.innerText = score;
           scoreWhenFinish.innerText = score;
 
@@ -453,8 +464,11 @@ function animate(timestamp) {
             perfectElement.style.opacity = 1;
             setTimeout(() => (perfectElement.style.opacity = 0), 1000);
           if (perfectHit) {
+            comboElement.style.display = "block";
             perfectElement.style.opacity = 1;
             setTimeout(() => (perfectElement.style.opacity = 0), 1000);
+          } else  {
+            comboElement.style.display = "none";
           }
 
           generatePlatform();
@@ -530,7 +544,7 @@ function animate(timestamp) {
 
 // Returns the platform the stick hit (if it didn't hit any stick then return undefined)
 function thePlatformTheStickHits() {
-  if (sticks.last().rotation != 90)
+  if (sticks.last().rotation !== 90)
     throw Error(`Stick is ${sticks.last().rotation}°`);
   const stickFarX = sticks.last().x + sticks.last().length;
 

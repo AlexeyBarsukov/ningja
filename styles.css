@@ -41,8 +41,16 @@ body {
         transform: translateY(0) translateX(-50%) rotate(0);
     }
 
-    50% {
+    25% {
         transform: translateY(-150px) translateX(50%) rotate(10deg);
+    }
+
+    50% {
+        transform: translateY(0) translateX(-50%) rotate(0);
+    }
+
+    75% {
+        transform: translateY(-50px) translateX(50%) rotate(5deg);
     }
 
     100% {
@@ -55,8 +63,16 @@ body {
         transform: translateY(0);
     }
 
+    25% {
+        transform: translateY(-150px);
+    }
+
     50% {
-        transform: translateY(-500px);
+        transform: translateY(0);
+    }
+
+    75% {
+        transform: translateY(-50px);
     }
 
     100% {
@@ -69,6 +85,10 @@ body {
         opacity: 1;
     }
 
+    75% {
+        opacity: 1;
+    }
+
     100% {
         opacity: 0;
     }
@@ -77,12 +97,12 @@ body {
 #combo {
     position: absolute;
     display: none;
-    bottom: 0px;
+    bottom: 0;
     right: 230px;
     font-size: 2em;
     font-weight: 900;
     color: rgb(3, 149, 3);
-    animation: wave 4s ease-in-out infinite, verticalMovement 4s ease-in-out infinite, fadeOut 1s ease-in-out 5s forwards;
+    animation: wave 4s ease-in-out forwards, verticalMovement 4s ease-in-out forwards, fadeOut 3s ease-in-out 3s forwards;
 }
 
 
@@ -306,20 +326,5 @@ h1 .type3 {
 }
 
 
-canvas,
-body {
-    -webkit-user-select: none;
-    /* Safari */
-    -moz-user-select: none;
-    /* Firefox */
-    -ms-user-select: none;
-    /* Internet Explorer/Edge */
-    user-select: none;
-    /* Non-prefixed version, currently supported by Chrome, Opera and Firefox */
-}
 
-/* Предотвращает долгое нажатие для контекстного меню на iOS */
-canvas {
-    -webkit-touch-callout: none;
-    /* iOS Safari */
-}
+
