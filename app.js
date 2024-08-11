@@ -63,15 +63,11 @@ const perfectElement = document.getElementById("perfect");
 const restartButton = document.getElementById("restart");
 const scoreElement = document.getElementById("score");
 const scoreWhenFinish = document.getElementById("scoreProgress");
-const titleElement = document.getElementById('exampleModalLabel');
-const titleTask = document.getElementById('title-task');
-const type2Description = document.getElementById('typeText2');
-const type3Description = document.getElementById('typeText3');
-const afterClickDescription = document.getElementById('afterClickDescription');
-const forwardButton = document.getElementById('forwardBtn');
 const changeLanguage = document.getElementById('openModalBtn');
 const mainSound = new Audio('assets/main.mp3');
 const comboElement = document.getElementById('combo');
+
+
 
 // Функция для воспроизведения музыки
 function playMusic() {
@@ -86,9 +82,6 @@ function pauseMusic() {
 
   changeLanguage.addEventListener('click', () => {
     pauseMusic();
-    $(document).ready(function () {
-        $("#exampleModal").modal("show");
-      });
   });
 
 
@@ -129,12 +122,11 @@ function updateRestartButtonText() {
 }
 
 russianFlagButton.addEventListener('click', () => {
-  titleElement.firstChild.nodeValue = 'Наставления';
-  titleTask.firstChild.nodeValue = 'Твоя задача преодолеть как можно больше столбов!';
-  type2Description.firstChild.nodeValue = 'Никогда не сдавайся!';
-  type3Description.firstChild.nodeValue = 'Преодолей все трудности!';
-  afterClickDescription.firstChild.nodeValue = 'После клика на кнопку "Вперед" твой ниндзя отправится в путь!';
-  forwardButton.firstChild.nodeValue = 'Вперед';
+  // titleTask.firstChild.nodeValue = 'Твоя задача преодолеть как можно больше столбов!';
+  // type2Description.firstChild.nodeValue = 'Никогда не сдавайся!';
+  // type3Description.firstChild.nodeValue = 'Преодолей все трудности!';
+  // afterClickDescription.firstChild.nodeValue = 'После клика на кнопку "Вперед" твой ниндзя отправится в путь!';
+  // forwardButton.firstChild.nodeValue = 'Вперед';
 //После старта игры
   introductionElement.firstChild.nodeValue = 'Тебе направо! Кликни и держи';
   changeLanguage.firstChild.nodeValue = 'Изменить язык';
@@ -148,12 +140,11 @@ russianFlagButton.addEventListener('click', () => {
 });
 
 americanFlagButton.addEventListener('click', () => {
-  titleElement.firstChild.nodeValue = 'Instructions';
-  titleTask.firstChild.nodeValue = 'Your task is to overcome as many pillars as possible!';
-  type2Description.firstChild.nodeValue = 'Never give up!';
-  type3Description.firstChild.nodeValue = 'Overcome all difficulties!';
-  afterClickDescription.firstChild.nodeValue = 'After clicking the "Forward" button, your ninja will set off on his journey!';
-  forwardButton.firstChild.nodeValue = 'Forward';
+  // titleTask.firstChild.nodeValue = 'Your task is to overcome as many pillars as possible!';
+  // type2Description.firstChild.nodeValue = 'Never give up!';
+  // type3Description.firstChild.nodeValue = 'Overcome all difficulties!';
+  // afterClickDescription.firstChild.nodeValue = 'After clicking the "Forward" button, your ninja will set off on his journey!';
+  // forwardButton.firstChild.nodeValue = 'Forward';
 //after start
   introductionElement.firstChild.nodeValue = 'You go right! Click and hold';
   changeLanguage.firstChild.nodeValue = 'Change the language';
@@ -167,12 +158,11 @@ americanFlagButton.addEventListener('click', () => {
 });
 
 turkishFlagButton.addEventListener('click', () => {
-  titleElement.firstChild.nodeValue = 'Talimatlar';
-  titleTask.firstChild.nodeValue = 'Göreviniz mümkün olduğunca çok sayıda engeli aşmak!';
-  type2Description.firstChild.nodeValue = 'Asla pes etme!';
-  type3Description.firstChild.nodeValue = 'Her zorluğun üstesinden gel!';
-  afterClickDescription.firstChild.nodeValue = '"İleri" butonuna tıkladıktan sonra ninjanız yolculuğuna başlayacak!';
-  forwardButton.firstChild.nodeValue = 'İleri';
+  // titleTask.firstChild.nodeValue = 'Göreviniz mümkün olduğunca çok sayıda engeli aşmak!';
+  // type2Description.firstChild.nodeValue = 'Asla pes etme!';
+  // type3Description.firstChild.nodeValue = 'Her zorluğun üstesinden gel!';
+  // afterClickDescription.firstChild.nodeValue = '"İleri" butonuna tıkladıktan sonra ninjanız yolculuğuna başlayacak!';
+  // forwardButton.firstChild.nodeValue = 'İleri';
 
   introductionElement.firstChild.nodeValue = 'Sen sağa git! Tıkla ve tut';
   changeLanguage.firstChild.nodeValue = 'Dili değiştir'; 

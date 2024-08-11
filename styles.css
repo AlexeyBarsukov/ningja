@@ -24,17 +24,54 @@ body {
     font-weight: 900;
 }
 
+.intro-text {
+    -webkit-user-select: none; /* Chrome all / Safari all */
+    -moz-user-select: none; /* Firefox all             */
+    -ms-user-select: none; /* Internet Explorer  10+  */
+    user-select: none; /* Likely future */
+}
+
 #openModalBtn {
     position: absolute;
-     top: 40px;
-    right: 120px;
+    top: 40px;
+    right: 55px;
     font-size: 1em;
     font-weight: 500;
     border: none;
-    background: rgb(13, 0, 255);
+    background: rgb(7, 78, 253);
+    padding: 0 9px;
     color: white;
     border-radius: 10px;
 }
+
+@media screen and (max-width: 900px) {
+    #openModalBtn {
+        top: 9px;
+        right: 10px;
+    }
+}
+
+
+#russian-flag, #american-flag, #turkish-flag  {
+    position: absolute;
+    top: 40px;
+    right: 304px;
+    font-size: 1em;
+    font-weight: 500;
+    border: none;
+    background: rgb(234, 226, 200);
+    color: white;
+    border-radius: 10px;
+}
+
+#american-flag {
+    right: 271px;
+}
+
+#turkish-flag {
+    right: 238px;
+}
+
 
 @keyframes wave {
     0% {
