@@ -66,6 +66,7 @@ const scoreWhenFinish = document.getElementById("scoreProgress");
 const changeLanguage = document.getElementById('openModalBtn');
 const mainSound = new Audio('assets/main.mp3');
 const comboElement = document.getElementById('combo');
+const checkbox = document.getElementById('rect3');
 
 
 
@@ -79,14 +80,23 @@ function pauseMusic() {
   mainSound.pause();
 }
 
-
-  changeLanguage.addEventListener('click', () => {
+changeLanguage.addEventListener('click', () => {
     pauseMusic();
   });
 
 
 
 let selectedLanguage = 'ru'; // По умолчанию русский
+
+
+checkbox.addEventListener('change', function() {
+  if (checkbox.checked) {
+
+    playMusic();
+  } else {
+    pauseMusic();
+  }
+});
 
 
 // Функция для обновления фраз
@@ -427,7 +437,6 @@ function animate(timestamp) {
 
   switch (phase) {
     case "waiting":
-      playMusic();
       return; // Stop the loop
     case "stretching": {
       sticks.last().length += (timestamp - lastTimestamp) / stretchingSpeed;
