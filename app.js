@@ -64,21 +64,81 @@ const restartButton = document.getElementById("restart");
 const scoreElement = document.getElementById("score");
 const scoreWhenFinish = document.getElementById("scoreProgress");
 const changeLanguage = document.getElementById('openModalBtn');
-const mainSound = new Audio('assets/main.mp3');
 const comboElement = document.getElementById('combo');
 const checkbox = document.getElementById('rect3');
+const textSound = document.getElementById('text-sound');
+const audioContext = new (window.AudioContext || window.webkitAudioContext)();
+let currentSource = null;
+let mainMusicSource = null; // Источник для основной музыки
+
+console.log(mainMusicSource)
+let randomSoundSource = null;
+
+async function loadAudio(url) {
+  const response = await fetch(url);
+  const arrayBuffer = await response.arrayBuffer();
+  return audioContext.decodeAudioData(arrayBuffer);
+}
+
+// Сохраняем загруженные звуки
+const sounds = {};
+const failedSounds = {};
 
 
+// Загружаем основные и дополнительные звуки
+async function loadSounds() {
+  sounds.mainSound = await loadAudio('assets/main.mp3');
+  sounds.wow = await Promise.all([
+    loadAudio('assets/wow.mp3'),
+    loadAudio('assets/wow2.mp3'),
+    loadAudio('assets/wow3.mp3'),
+    loadAudio('assets/wow4.mp3'),
+  ]);
+  sounds.fail = await Promise.all([
+    loadAudio('assets/fail.mp3'),
+    loadAudio('assets/fail2.mp3'),
+    loadAudio('assets/fail3.mp3'),
+    loadAudio('assets/fail4.mp3'),
+  ]);
+}
+
+loadSounds();
+
+// Воспроизведение звука
+function playSound(buffer) {
+
+  const source = audioContext.createBufferSource();
+  source.buffer = buffer;
+  source.connect(audioContext.destination);
+  source.start();
+  return source;
+}
 
 // Функция для воспроизведения музыки
 function playMusic() {
-  mainSound.play();
+  if (sounds.mainSound) {
+    mainMusicSource = playSound(sounds.mainSound);
+  }
 }
 
 // Функция для паузы музыки
 function pauseMusic() {
-  mainSound.pause();
+  if (mainMusicSource) {
+    mainMusicSource.stop(); // Останавливаем текущий источник
+    mainMusicSource = null; // Сбрасываем источник
+  }
 }
+
+
+// Функция для воспроизведения музыки
+// function playMusic() {
+//   mainSound.play();
+// }
+//
+// // Функция для паузы музыки
+// function pauseMusic() {
+//   mainSound.pause();
+// }
 
 changeLanguage.addEventListener('click', () => {
     pauseMusic();
@@ -91,10 +151,27 @@ let selectedLanguage = 'ru'; // По умолчанию русский
 
 checkbox.addEventListener('change', function() {
   if (checkbox.checked) {
-
     playMusic();
+    if(selectedLanguage === 'ru'){
+      textSound.innerText = "Музыка: включено"
+    }
+    if(selectedLanguage === 'en'){
+      textSound.innerText = "Sound: On"
+    }
+    if(selectedLanguage === 'tr'){
+      textSound.innerText = "Ses: açık"
+    }
   } else {
     pauseMusic();
+    if(selectedLanguage === 'ru'){
+      textSound.innerText = "Музыка: выключено"
+    }
+    if(selectedLanguage === 'en'){
+      textSound.innerText = "Music: Off"
+    }
+    if(selectedLanguage === 'tr'){
+      textSound.innerText = "Müzik: kapalı"
+    }
   }
 });
 
@@ -122,12 +199,27 @@ function updateRestartButtonText() {
   if (selectedLanguage === 'ru') {
     restartButton.querySelector('b').innerHTML = `Все еще впереди! <br/>Количество пройденных столбов: ${score}`;
     restartButton.querySelector('i').innerText = 'Нажмите на квадрат, чтобы продолжить!';
+    if(selectedLanguage === 'ru' && checkbox.checked){
+      textSound.innerText = "Музыка: включено"
+    }else {
+      textSound.innerText = "Музыка: выключено"
+    }
   } else if (selectedLanguage === 'en') {
     restartButton.querySelector('b').innerHTML = `Still Ahead! <br/>Pillars Passed: ${score}`;
     restartButton.querySelector('i').innerText = 'Click the square to continue!';
+    if(selectedLanguage === 'en' && checkbox.checked){
+      textSound.innerText = "Music: On"
+    }else {
+      textSound.innerText = "Music: Off"
+    }
   } else if (selectedLanguage === 'tr') {
     restartButton.querySelector('b').innerHTML = `Hala Önümüzde! <br/>Sütunlar Geçildi: ${score}`;
     restartButton.querySelector('i').innerText = 'Devam etmek için kareye tıklayın!';
+    if(selectedLanguage === 'tr' && checkbox.checked){
+      textSound.innerText = "Müzik: açık"
+    }else {
+      textSound.innerText = "Müzik: kapalı"
+    }
   }
 }
 
@@ -185,60 +277,88 @@ turkishFlagButton.addEventListener('click', () => {
   updateRestartButtonText();
 });
 
-const sounds = [
-    new Audio('assets/wow.mp3'),
-    new Audio('assets/wow2.mp3'),
-    new Audio('assets/wow3.mp3'),
-    new Audio('assets/wow4.mp3'),
-];
+// const sounds = [
+//     new Audio('assets/wow.mp3'),
+//     new Audio('assets/wow2.mp3'),
+//     new Audio('assets/wow3.mp3'),
+//     new Audio('assets/wow4.mp3'),
+// ];
+//
+// sounds.forEach((sound, index) => {
+//   sound.id = `audioPlayer${index}`;
+//   sound.controls = true;  // Добавляем контролы
+//   document.body.appendChild(sound); // Добавляем аудиоэлемент в DOM
+// });
+//
+// const failedSounds = [
+//     new Audio('assets/fail.mp3'),
+//     new Audio('assets/fail2.mp3'),
+//     new Audio('assets/fail3.mp3'),
+//     new Audio('assets/fail4.mp3')
+// ];
+//
+// failedSounds.forEach((sound, index) => {
+//   sound.id = `failedAudioPlayer${index}`;
+//   sound.controls = true;  // Добавляем контролы
+//   document.body.appendChild(sound); // Добавляем аудиоэлемент в DOM
+// });
 
-const failedSounds = [
-    new Audio('assets/fail.mp3'),
-    new Audio('assets/fail2.mp3'),
-    new Audio('assets/fail3.mp3'),
-    new Audio('assets/fail4.mp3')
-];
+// // Отключаем управление плеером на устройствах для каждого звука
+// sounds.forEach(sound => sound.disableRemotePlayback = true);
+// failedSounds.forEach(sound => sound.disableRemotePlayback = true);
 
 function playRandomSound() {
-    const randomIndex = Math.floor(Math.random() * sounds.length);
-    sounds[randomIndex].play();
+  const randomSound = sounds.wow[Math.floor(Math.random() * sounds.wow.length)];
+  playSound(randomSound);
 }
 
 function playRandomFailsSounds(){
-  const randomIndex = Math.floor(Math.random() * failedSounds.length);
-    failedSounds[randomIndex].play();
+  // const randomIndex = Math.floor(Math.random() * failedSounds.length);
+  //   failedSounds[randomIndex].play();
+
+  const randomFailSound = sounds.fail[Math.floor(Math.random() * sounds.fail.length)];
+  playSound(randomFailSound);
 }
 
-const pausedSounds = new Set();
+
+let pausedSounds = new Set();
 
 document.addEventListener('visibilitychange', () => {
   if (document.hidden) {
+    audioContext.suspend();
     // Вкладка неактивна, приостанавливаем все звуки и запоминаем их
-    failedSounds.forEach(sound => {
-      if (!sound.paused) {
-        sound.pause();
-        pausedSounds.add(sound);
-      }
-    });
+    // failedSounds.forEach(sound => {
+    //   if (!sound.paused) {
+    //     sound.pause();
+    //     sound.style.display = 'none';
+    //     pausedSounds.add(sound);
+    //   }
+    // });
+    //
+    // sounds.forEach(sound => {
+    //   if (!sound.paused) {
+    //     sound.pause();
+    //     sound.style.display = 'none';
+    //     pausedSounds.add(sound);
+    //   }
+    // });
 
-    sounds.forEach(sound => {
-      if (!sound.paused) {
-        sound.pause();
-        pausedSounds.add(sound);
-      }
-    });
 
-    if(!mainSound.paused){
-      mainSound.pause();
-      pausedSounds.add(mainSound);
-    }
+    // if(!mainSound.paused){
+    //   mainSound.pause();
+    //   mainSound.style.display = 'none';
+    //   pausedSounds.add(mainSound);
+    // }
 
   } else {
     // Вкладка активна, возобновляем воспроизведение ранее запомненных звуков
-    pausedSounds.forEach(sound => {
-      sound.play();
-      pausedSounds.delete(sound);
-    });
+    // pausedSounds.forEach(sound => {
+    //   sound.style.display = 'block';
+    //   sound.play();
+    //   pausedSounds.delete(sound);
+    // });
+
+    audioContext.resume();
   }
 });
 
@@ -597,8 +717,8 @@ function drawPlatforms() {
     ctx.fillStyle = "#db9065";
 ctx.beginPath();
 ctx.moveTo(150, 50);
-ctx.lineTo(100, 75);
-ctx.lineTo(100, 25);
+// ctx.lineTo(100, 75);
+// ctx.lineTo(100, 25);
 ctx.fill();
 
 
@@ -636,7 +756,7 @@ function getRandomColor() {
   const r = Math.floor(Math.random() * 256); // Красный
   const g = Math.floor(Math.random() * 256); // Зеленый
   const b = Math.floor(Math.random() * 256); // Синий
-  return `rgb(${r}, ${g}, ${b})`;
+  return `black`;
 }
 
 

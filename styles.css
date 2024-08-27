@@ -303,6 +303,19 @@ h1 .type3 {
     border-radius: 10px;
 }
 
+.sound {
+    position: absolute;
+    top: 40px;
+    right: 273px;
+}
+
+@media screen and (max-width: 900px){
+    .sound {
+        top: 77px;
+        right: 23px;
+    }
+}
+
 
 /* toggle-rect end*/
 
@@ -421,7 +434,4 @@ h1 .type3 {
 }
 /* toggle-rect-dark end*/
 
-
-
-
-
+audio { display:none;}
