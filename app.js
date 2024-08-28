@@ -71,7 +71,6 @@ const audioContext = new (window.AudioContext || window.webkitAudioContext)();
 let currentSource = null;
 let mainMusicSource = null; // Источник для основной музыки
 
-console.log(mainMusicSource)
 let randomSoundSource = null;
 
 async function loadAudio(url) {
@@ -129,16 +128,6 @@ function pauseMusic() {
   }
 }
 
-
-// Функция для воспроизведения музыки
-// function playMusic() {
-//   mainSound.play();
-// }
-//
-// // Функция для паузы музыки
-// function pauseMusic() {
-//   mainSound.pause();
-// }
 
 changeLanguage.addEventListener('click', () => {
     pauseMusic();
@@ -224,17 +213,10 @@ function updateRestartButtonText() {
 }
 
 russianFlagButton.addEventListener('click', () => {
-  // titleTask.firstChild.nodeValue = 'Твоя задача преодолеть как можно больше столбов!';
-  // type2Description.firstChild.nodeValue = 'Никогда не сдавайся!';
-  // type3Description.firstChild.nodeValue = 'Преодолей все трудности!';
-  // afterClickDescription.firstChild.nodeValue = 'После клика на кнопку "Вперед" твой ниндзя отправится в путь!';
-  // forwardButton.firstChild.nodeValue = 'Вперед';
 //После старта игры
   introductionElement.firstChild.nodeValue = 'Тебе направо! Кликни и держи';
   changeLanguage.firstChild.nodeValue = 'Изменить язык';
 
-  // restartButton.querySelector('b').innerHTML = `Все еще впереди! <br/>Количество пройденных столбов: ${score}`;
-  // restartButton.querySelector('i').innerText = 'Нажмите на квадрат, чтобы продолжить!';
 
   selectedLanguage = 'ru';
   updatePhrases();
@@ -242,17 +224,9 @@ russianFlagButton.addEventListener('click', () => {
 });
 
 americanFlagButton.addEventListener('click', () => {
-  // titleTask.firstChild.nodeValue = 'Your task is to overcome as many pillars as possible!';
-  // type2Description.firstChild.nodeValue = 'Never give up!';
-  // type3Description.firstChild.nodeValue = 'Overcome all difficulties!';
-  // afterClickDescription.firstChild.nodeValue = 'After clicking the "Forward" button, your ninja will set off on his journey!';
-  // forwardButton.firstChild.nodeValue = 'Forward';
 //after start
   introductionElement.firstChild.nodeValue = 'You go right! Click and hold';
   changeLanguage.firstChild.nodeValue = 'Change the language';
-
-  // restartButton.querySelector('b').innerHTML = `Still Ahead! <br/>Pillars Passed: ${score}`;
-  // restartButton.querySelector('i').innerText = 'Click the square to continue!';
 
   selectedLanguage = 'en';
   updatePhrases();
@@ -269,43 +243,11 @@ turkishFlagButton.addEventListener('click', () => {
   introductionElement.firstChild.nodeValue = 'Sen sağa git! Tıkla ve tut';
   changeLanguage.firstChild.nodeValue = 'Dili değiştir'; 
 
-  // restartButton.querySelector('b').innerHTML = `Hala Önümüzde! <br/>Sütunlar Geçildi: ${score}`;
-  // restartButton.querySelector('i').innerText = 'Devam etmek için kareye tıklayın!';
 
   selectedLanguage = 'tr';
   updatePhrases();
   updateRestartButtonText();
 });
-
-// const sounds = [
-//     new Audio('assets/wow.mp3'),
-//     new Audio('assets/wow2.mp3'),
-//     new Audio('assets/wow3.mp3'),
-//     new Audio('assets/wow4.mp3'),
-// ];
-//
-// sounds.forEach((sound, index) => {
-//   sound.id = `audioPlayer${index}`;
-//   sound.controls = true;  // Добавляем контролы
-//   document.body.appendChild(sound); // Добавляем аудиоэлемент в DOM
-// });
-//
-// const failedSounds = [
-//     new Audio('assets/fail.mp3'),
-//     new Audio('assets/fail2.mp3'),
-//     new Audio('assets/fail3.mp3'),
-//     new Audio('assets/fail4.mp3')
-// ];
-//
-// failedSounds.forEach((sound, index) => {
-//   sound.id = `failedAudioPlayer${index}`;
-//   sound.controls = true;  // Добавляем контролы
-//   document.body.appendChild(sound); // Добавляем аудиоэлемент в DOM
-// });
-
-// // Отключаем управление плеером на устройствах для каждого звука
-// sounds.forEach(sound => sound.disableRemotePlayback = true);
-// failedSounds.forEach(sound => sound.disableRemotePlayback = true);
 
 function playRandomSound() {
   const randomSound = sounds.wow[Math.floor(Math.random() * sounds.wow.length)];
@@ -313,9 +255,6 @@ function playRandomSound() {
 }
 
 function playRandomFailsSounds(){
-  // const randomIndex = Math.floor(Math.random() * failedSounds.length);
-  //   failedSounds[randomIndex].play();
-
   const randomFailSound = sounds.fail[Math.floor(Math.random() * sounds.fail.length)];
   playSound(randomFailSound);
 }
@@ -326,38 +265,7 @@ let pausedSounds = new Set();
 document.addEventListener('visibilitychange', () => {
   if (document.hidden) {
     audioContext.suspend();
-    // Вкладка неактивна, приостанавливаем все звуки и запоминаем их
-    // failedSounds.forEach(sound => {
-    //   if (!sound.paused) {
-    //     sound.pause();
-    //     sound.style.display = 'none';
-    //     pausedSounds.add(sound);
-    //   }
-    // });
-    //
-    // sounds.forEach(sound => {
-    //   if (!sound.paused) {
-    //     sound.pause();
-    //     sound.style.display = 'none';
-    //     pausedSounds.add(sound);
-    //   }
-    // });
-
-
-    // if(!mainSound.paused){
-    //   mainSound.pause();
-    //   mainSound.style.display = 'none';
-    //   pausedSounds.add(mainSound);
-    // }
-
   } else {
-    // Вкладка активна, возобновляем воспроизведение ранее запомненных звуков
-    // pausedSounds.forEach(sound => {
-    //   sound.style.display = 'block';
-    //   sound.play();
-    //   pausedSounds.delete(sound);
-    // });
-
     audioContext.resume();
   }
 });
@@ -373,16 +281,23 @@ function resetGame() {
   sceneOffset = 0;
   score = 0;
 
+
+  const yandexStart = async () => {
+    const ysdk = await YaGames.init();
+    ysdk.features.GameplayAPI?.start()
+  }
+
+  yandexStart()
+
+
   introductionElement.style.opacity = 1;
-  perfectElement.style.opacity = 0;
+  perfectElement.style.display = "none";
   restartButton.style.display = "none";
   scoreElement.innerText = score;
   scoreWhenFinish.innerText = score;
 
 localStorage.setItem('score', 0)
 
-  // The first platform is always the same
-  // x + w has to match paddingX
   platforms = [{ x: 50, w: 50 }];
   generatePlatform();
   generatePlatform();
@@ -507,6 +422,24 @@ if (isTouchDevice) {
 document.body.style.userSelect = 'none';
 document.body.style.webkitTouchCallout = 'none';
 
+document.addEventListener('touchstart', function (event) {
+  if (event.target.tagName === 'CANVAS') {
+    event.preventDefault();
+  }
+}, { passive: false });
+
+document.addEventListener('touchmove', function (event) {
+  if (event.target.tagName === 'CANVAS') {
+    event.preventDefault();
+  }
+}, { passive: false });
+
+document.addEventListener('contextmenu', function (event) {
+  event.preventDefault();
+});
+
+
+
 window.addEventListener("resize", function (event) {
   canvas.width = window.innerWidth;
   canvas.height = window.innerHeight;
@@ -580,12 +513,12 @@ function animate(timestamp) {
           scoreWhenFinish.innerText = score;
 
           localStorage.setItem('score', score)
-            perfectElement.style.opacity = 1;
-            setTimeout(() => (perfectElement.style.opacity = 0), 1000);
+            perfectElement.style.display = "block";
+            setTimeout(() => (perfectElement.style.display = "block"), 1000);
           if (perfectHit) {
             comboElement.style.display = "block";
-            perfectElement.style.opacity = 1;
-            setTimeout(() => (perfectElement.style.opacity = 0), 1000);
+            perfectElement.style.display  = "block";
+            setTimeout(() => (perfectElement.style.display = "block"), 1000);
           } else  {
             comboElement.style.display = "none";
           }
@@ -604,7 +537,6 @@ function animate(timestamp) {
 
       const [nextPlatform] = thePlatformTheStickHits();
       if (nextPlatform) {
-        // If hero will reach another platform then limit it's position at it's edge
         const maxHeroX = nextPlatform.x + nextPlatform.w - heroDistanceFromEdge;
         if (heroX > maxHeroX) {
           heroX = maxHeroX;
@@ -612,7 +544,6 @@ function animate(timestamp) {
           playRandomSound();
         }
       } else {
-        // If hero won't reach another platform then limit it's position at the end of the pole
         const maxHeroX = sticks.last().x + sticks.last().length + heroWidth;
         if (heroX > maxHeroX) {
           heroX = maxHeroX;
@@ -641,14 +572,21 @@ function animate(timestamp) {
         sticks.last().rotation += (timestamp - lastTimestamp) / turningSpeed;
 
       heroY += (timestamp - lastTimestamp) / fallingSpeed;
-      const maxHeroY =
-        platformHeight + 100 + (window.innerHeight - canvasHeight) / 2;
+      const maxHeroY = platformHeight + 100 + (window.innerHeight - canvasHeight) / 2;
+
       if (heroY > maxHeroY) {
         playRandomFailsSounds();
         restartButton.style.display = "block";
         updateRestartButtonText(); 
         return;
       }
+      restartButton.style.display = "block";
+
+      const yandexStop = async () => {
+        const ysdk = await YaGames.init();
+        ysdk.features.GameplayAPI?.stop()
+      }
+      yandexStop();
       break;
     }
     default:
