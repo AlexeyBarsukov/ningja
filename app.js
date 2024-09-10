@@ -22,6 +22,7 @@ let trees = [];
 
 
 let score = 0;
+let maxScore = localStorage.getItem('maxScore') ? parseInt(localStorage.getItem('maxScore')) : 0;
 
 
 
@@ -582,9 +583,13 @@ function animate(timestamp) {
       }
       restartButton.style.display = "block";
 
+      if(score > maxScore) {
+        maxScore = score;
+        localStorage.setItem('maxScore', maxScore);
+      }
+
       const yandexStop = () => {
 
-        console.log(score)
 
         YaGames.init().then(ysdk => {
           console.log('Yandex SDK initialized');
@@ -594,7 +599,7 @@ function animate(timestamp) {
           // Вызов метода для работы с таблицей лидеров
           ysdk.getLeaderboards()
               .then(lb => {
-                return lb.setLeaderboardScore('leaderBoards', score); // Установка очков
+                return lb.setLeaderboardScore('leaderBoards', maxScore); // Установка очков
               })
               .then(() => {
                 console.log('Score successfully submitted');
