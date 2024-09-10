@@ -582,8 +582,30 @@ function animate(timestamp) {
       }
       restartButton.style.display = "block";
 
-      const yandexStop = async () => {
-        const ysdk = await YaGames.init();
+      const yandexStop = () => {
+
+        console.log(score)
+
+        YaGames.init().then(ysdk => {
+          console.log('Yandex SDK initialized');
+          window.ysdk = ysdk;
+
+
+          // Вызов метода для работы с таблицей лидеров
+          ysdk.getLeaderboards()
+              .then(lb => {
+                return lb.setLeaderboardScore('leaderBoards', score); // Установка очков
+              })
+              .then(() => {
+                console.log('Score successfully submitted');
+              })
+              .catch(err => {
+                console.error('Error submitting score:', err);
+              });
+        }).catch(err => {
+          console.error('Error initializing Yandex SDK:', err);
+        });
+
         ysdk.features.GameplayAPI?.stop()
       }
       yandexStop();

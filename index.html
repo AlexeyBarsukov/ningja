@@ -44,18 +44,17 @@
 
     <script src="app.js"></script>
     <script>
-      YaGames
-              .init()
-              .then(ysdk => {
-                console.log('Yandex SDK initialized');
-                window.ysdk = ysdk;
-              });
-    </script>
-    <script>
-      const ysdk = await YaGames.init();
 
-      // Сообщаем платформе, что игра загрузилась и можно начинать играть.
-      ysdk.features.LoadingAPI?.ready();
+      YaGames.init().then(ysdk => {
+        console.log('Yandex SDK initialized');
+        window.ysdk = ysdk;
+
+        ysdk.features.LoadingAPI?.ready();
+      });
+
+    </script>
+
+    <script>
 
     </script>
 
