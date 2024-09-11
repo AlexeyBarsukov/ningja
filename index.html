@@ -45,13 +45,14 @@
     <script src="app.js"></script>
     <script>
 
-      YaGames.init().then(ysdk => {
+      const yandexStart = YaGames.init().then(ysdk => {
         console.log('Yandex SDK initialized');
         window.ysdk = ysdk;
 
         ysdk.features.LoadingAPI?.ready();
       });
 
+      yandexStart();
     </script>
 
     <script>
